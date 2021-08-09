@@ -5,8 +5,6 @@ const UserAuth = require('../models/auth/userAuth.js')
 // Password hassing
 const generateHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
 
-// methods for authentication
-
 // REGISTER ENDPOINT
 router.post("/register", async (req, res) => {
     const user_password = generateHash(req.body.password)
