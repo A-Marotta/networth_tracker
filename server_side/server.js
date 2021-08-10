@@ -15,9 +15,9 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 // CONTROLLERS 
-const authRoute = require('./controllers/auth')
-const assetsRoute = require('./controllers/assets')
-const liabilitiesRoute = require('./controllers/liabilities')
+const authRoute = require('./controllers/authController')
+const assetsRoute = require('./controllers/assetsController')
+const liabilitiesRoute = require('./controllers/liabilitiesController')
 
 // ROUTES 
 app.use("/api/auth", authRoute)

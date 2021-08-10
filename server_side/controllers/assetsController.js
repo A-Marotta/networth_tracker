@@ -16,7 +16,7 @@ router.post("/new", async (req, res) => {
 
         Asset
             .create(newAsset)
-            .then(dbRes => res.status(200).json(newAsset))
+            .then(dbRes => res.status(200).json(dbRes.rows[0]))
 
     } catch (err) {
         res.status(500).json(err)
@@ -37,22 +37,27 @@ router.get("/:id", async (req, res) => {
 // ASSET - UPDATE ENDPOINT
 router.patch("/:id/edit", async (req, res) => {
     try {
+        const asset = await Asset.findOne( req.params.id )
+        if(asset.rows.length === 0) return res.status(404).send("asset not found")
+
         Asset
             .update( req.body.current_value, req.params.id )
             .then( dbRes => res.status(200).json(dbRes.rows[0]) )
     } catch (err) {
-        
+        res.status(404).json(err)
     }
 })
 
 // ASSET - DELETE ENDPOINT
 router.delete("/:id", async (req, res) => {
     try {
+        const asset = await Asset.findOne( req.params.id )
+        if(asset.rows.length === 0) return res.status(404).send("asset not found")
+
         Asset
             .delete( req.params.id )
             .then( dbRes => res.status(200).json('delete operation successful.') )
     } catch (err) {
-        console.log(err)
         res.status(404).json(err)
     }    
 })
@@ -64,7 +69,6 @@ router.get("/", async (req, res) => {
             .findAll( req.body.user_id )
             .then( dbRes => res.status(200).json(dbRes.rows) )
     } catch (err) {
-        console.log(err)
         res.status(404).json(err)
     }
 })

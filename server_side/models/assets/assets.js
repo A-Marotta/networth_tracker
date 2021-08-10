@@ -16,6 +16,7 @@ const Asset = {
             INSERT INTO asset 
             (user_id, asset_type, asset_purchase_date, asset_purchase_value, asset_purchase_qty, asset_ticker, asset_current_value)
             VALUES ($1, $2, $3, $4, $5, $6, $7)
+            returning asset.*
         `
 
         return db.query(sql, 
