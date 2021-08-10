@@ -5,7 +5,7 @@ const UserAuth = {
         const {email, name, username, password_digest} = newUser
 
         const sql = `
-            INSERT into USERS 
+            INSERT INTO users 
             (email, name, username, password_digest)
             VALUES ($1, $2, $3, $4)
         `

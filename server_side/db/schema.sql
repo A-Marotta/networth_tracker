@@ -17,6 +17,7 @@ CREATE TABLE asset(
     asset_purchase_date VARCHAR(10) NOT NULL,
     asset_purchase_value NUMERIC NOT NULL,
     asset_purchase_qty NUMERIC,
+    asset_ticker VARCHAR(10),
     asset_current_value NUMERIC
 );
 
