@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
+import { Spin } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
 
 import './assets.css'
 
@@ -8,6 +10,9 @@ const baseURL = 'http://localhost:8080/api/'
 
 export default function Assets() {
     const [assetTotal, setAssetTotal] = useState(0)
+    const [hasAssetData, setHasAssetData] = useState(false)
+
+    const antIcon = <LoadingOutlined style={{ fontSize: 26, color: 'blue' }} spin />;
 
     useEffect(() => {
         getAssetSumarries()
@@ -20,15 +25,9 @@ export default function Assets() {
                 let totalAssetAmount = 0
                 
                 res.data.forEach(record => {
-                    let multiplier = 0
-
-                    record.asset_purchase_qty === null 
-                        ? multiplier = 1 
-                        : multiplier = record.asset_purchase_qty
-
-                    totalAssetAmount += multiplier * record.asset_current_value
+                    totalAssetAmount += Number(record.asset_current_value)
                 })
-
+                setHasAssetData(true)
                 setAssetTotal(Math.round(totalAssetAmount * 100) / 100)
             })
     }
@@ -36,7 +35,7 @@ export default function Assets() {
     return (
         <div className="asset-wrapper">
             <div className="asset-value">
-                <h3 className="asset-amount">${assetTotal}</h3>
+                {hasAssetData ? <h3 className="asset-amount">${assetTotal}</h3> : <Spin indicator={antIcon} />}
                 <ArrowUpwardIcon className="asset-icon"/>
             </div>
         </div>

@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const Asset = require('../models/assets/assets.js')
+const { asx_data_manipulation } = require('../service_objects/get_stockprice_asx')
+const { crypto_data_manipulation } = require('../service_objects/get_cryptoprice')
 
 // ASSET - CREATE ENDPOINT
 router.post("/new", async (req, res) => {
@@ -65,10 +67,24 @@ router.delete("/:id", async (req, res) => {
 // ASSET - READ ALL ENDPOINT
 router.post("/", async (req, res) => {
     try {
-        Asset
-            .findAll( req.body.user_id )
-            .then( dbRes => res.status(200).json(dbRes.rows) )
+        let allAssets = []
+        const assets = await Asset.findAll( req.body.user_id )
+            
+        await Promise.all(assets.rows.map(async asset => {
+            if (asset.asset_type === 'ASX') {
+                const asx_asset = await asx_data_manipulation(asset)
+                allAssets.push(asx_asset)
+            } else if (asset.asset_type === 'CRYPTO') {
+                const crypto_asset = await crypto_data_manipulation(asset)
+                allAssets.push(crypto_asset)
+            } else {
+                allAssets.push(asset)
+            }
+        }))
+
+        res.status(200).json(allAssets)
     } catch (err) {
+        console.log(err)
         res.status(404).json(err)
     }
 })

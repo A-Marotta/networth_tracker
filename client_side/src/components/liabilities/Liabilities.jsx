@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
+import { Spin } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
 
 import './liabilities.css'
 
@@ -8,6 +10,9 @@ const baseURL = 'http://localhost:8080/api/'
 
 export default function Liabilities() {
     const [liabilityTotal, setLiabilityTotal] = useState(0)
+    const [hasLiabilityData, setHasLiabilityData] = useState(false)
+
+    const antIcon = <LoadingOutlined style={{ fontSize: 26, color: 'blue' }} spin />
 
     useEffect(() => {
         getLiabilitySumarries()
@@ -28,7 +33,7 @@ export default function Liabilities() {
 
                     totalLiabilityAmount += multiplier * record.liability_current_value
                 })
-
+                setHasLiabilityData(true)
                 setLiabilityTotal(Math.round(totalLiabilityAmount * 100) / 100)
             })
     }
@@ -36,7 +41,7 @@ export default function Liabilities() {
     return (
         <div className="liability-wrapper">
             <div className="liability-value">
-                <h3 className="liability-amount">${liabilityTotal}</h3>
+                {hasLiabilityData ? <h3 className="liability-amount">${liabilityTotal}</h3> : <Spin indicator={antIcon} />}
                 <ArrowDownwardIcon className="liability-icon"/>
             </div>
         </div>
