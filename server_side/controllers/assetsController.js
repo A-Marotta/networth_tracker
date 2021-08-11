@@ -63,7 +63,7 @@ router.delete("/:id", async (req, res) => {
 })
 
 // ASSET - READ ALL ENDPOINT
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         Asset
             .findAll( req.body.user_id )

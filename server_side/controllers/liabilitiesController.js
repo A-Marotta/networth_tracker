@@ -62,7 +62,7 @@ router.delete("/:id", async (req, res) => {
 })
 
 // LIABILITY - READ ALL ENDPOINT
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         Liability
             .findAll( req.body.user_id )

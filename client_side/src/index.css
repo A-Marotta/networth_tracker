@@ -1,0 +1,41 @@
+/* Making the styles consistent across all pages  */
+* {
+  box-sizing: border-box;
+  /* border: 1px solid red; */
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background-color: #fbfbfb;
+}
+
+#root {
+  height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  display: block;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-size: inherit;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  border: 0;
+}

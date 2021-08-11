@@ -1,0 +1,33 @@
+.liability-wrapper {
+    flex: 1 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.liability-value {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.liability-amount {
+    font-size: 40px;
+    font-weight: 500;
+    color: #ca2929;
+}
+
+.liability-icon {
+    height: 40px;
+    width: 40px;
+    color: #ca2929;
+}
+
+.liability-icon {
+    width: 1.5em !important;
+    height: 1.5em !important;
+    padding-left: 5px;
+}
